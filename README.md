@@ -1,5 +1,8 @@
 # Omniata-android-sdk
-Check [here](https://omniata.atlassian.net/wiki/display/DOC/ANDROID+SDK) for Omniata integration documentation.
+Build to omniata-android-sdk.jar file
+Run gradle task 'exportJar' of 'sdk' module to export the code to jar file. The file will be in this path:
+<PROJECT PAHT>/sdk/release/  
+
 
 ## Features and technical description
 Omniata Android SDK is a library developed by Omniata that allows Android application developers to easily integrate their applications with Omniata services. The key features of the SDK are sending events to Omniata using Event API and requesting content for users using Channel API.
