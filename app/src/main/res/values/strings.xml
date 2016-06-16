@@ -1,0 +1,12 @@
+<resources>
+
+    <string name="app_name">omniata-android-sdk</string>
+    <string name="button1">om_load</string>
+    <string name="button2">om_revenue</string>
+    <string name="button3">om_event</string>
+    <string name="button4">load_channel_message</string>
+    <string name="button5">get_channel_message</string>
+    <string name="button6">enable_push</string>
+    <string name="button7">om_alias</string>
+
+</resources>
