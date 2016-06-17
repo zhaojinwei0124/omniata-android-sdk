@@ -394,9 +394,9 @@ public class Omniata {
      * Track the Advertiser ID and Android ID with parameters
      * 
      * If Google advetiser ID is availabe, there will parameters of
-     * om_google_aid=<advetiser_id> and om_android_id=<device_android_id>
+     * om_google_aid="advetiser_id" and om_android_id="device_android_id"
      * inside of the tracking event, otherwise there will be only
-     * om_android_id=<device_android_id> parameter inside of the event.
+     * om_android_id="device_android_id" parameter inside of the event.
      *
      * @param additionalParams
      * @throws IllegalStateException

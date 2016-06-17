@@ -1,0 +1,92 @@
+apply plugin: 'com.android.library'
+apply plugin: "com.jfrog.bintray"
+apply plugin: 'com.github.dcendents.android-maven'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
+
+    defaultConfig {
+        minSdkVersion 11
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+//task to delete the old jar
+task deleteOldJar(type: Delete) {
+    delete 'release/omniata-android-sdk.jar'
+}
+//task to export contents as jar
+task exportJar(type: Copy) {
+    from('build/intermediates/bundles/release/')
+    into('release/')
+    include('classes.jar')
+    ///Rename the jar library
+    rename('classes.jar', 'omniata-android-sdk.jar')
+}
+//
+exportJar.dependsOn(deleteOldJar, build)
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.google.android.gms:play-services-ads:+'
+}
+
+version = '2.1.5'
+
+//
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
+bintray {
+    user = 'junomniata'
+    key = '351c5e1138d5a650f61d9b1ab650a53f81440fa4'
+    configurations = ['archives']
+    pkg {
+        repo = 'maven'
+        name = 'omniata-android'
+        userOrg = 'junomniata'
+        licenses = ['Apache-2.0']
+        publish = true
+        vcsUrl = 'https://github.com/Omniata/omniata-android-sdk.git'
+        version {
+            name = '2.1.5'
+            desc = 'Omniata Android SDK 2.1.5'
+            released  = new Date()
+            vcsTag = '2.1.5'
+            attributes = ['omniata-android': 'com.omniata.android.sdk:omniata-android']
+            gpg {
+                sign = true //Determines whether to GPG sign the files. The default is false
+                passphrase = 'pa55word' //Optional. The passphrase for GPG signing'
+            }
+        }
+    }
+}
