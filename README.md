@@ -3,6 +3,23 @@ Build to omniata-android-sdk.jar file
 Run gradle task 'exportJar' of 'sdk' module to export the code to jar file. The file will be in this path:
 <PROJECT PAHT>/sdk/release/  
 
+Build the module to upload to jcenter, do as follows:
+
+a. modify the 'sdkVersion' number in build.gradle file of 'omniata-android' module
+b. build the project and run the following two command in terminal
+```bash
+gradle install
+gradle bintrayupload
+```
+c. the SDK can be used by including the following line in project's build.gradle file
+```
+dependencies {
+    compile 'com.omniata.android-library:omniata-android:2.1.5'
+}
+```
+
+The file stacks can be checked in this link:
+https://dl.bintray.com/junomniata/maven/com/omniata/android/library/omniata-android/2.1.5/
 
 ## Features and technical description
 Omniata Android SDK is a library developed by Omniata that allows Android application developers to easily integrate their applications with Omniata services. The key features of the SDK are sending events to Omniata using Event API and requesting content for users using Channel API.
