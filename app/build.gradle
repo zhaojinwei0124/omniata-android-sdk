@@ -24,5 +24,5 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.google.android.gms:play-services-ads:+'
     compile 'com.android.support:appcompat-v7:23.1.0'
-    compile project(':omniat-android')
+    compile project(':omniata-android')
 }

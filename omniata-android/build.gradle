@@ -1,7 +1,9 @@
 apply plugin: 'com.android.library'
 apply plugin: "com.jfrog.bintray"
 apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'maven'
 
+group = 'com.omniata.android.library'
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
@@ -66,13 +68,15 @@ artifacts {
     archives sourcesJar
 }
 
+
 bintray {
     user = 'junomniata'
     key = '351c5e1138d5a650f61d9b1ab650a53f81440fa4'
     configurations = ['archives']
+//    publications = ['MyPublication']
     pkg {
         repo = 'maven'
-        name = 'omniata-android'
+        name = 'omniata-android-library'
         userOrg = 'junomniata'
         licenses = ['Apache-2.0']
         publish = true
@@ -82,7 +86,7 @@ bintray {
             desc = 'Omniata Android SDK 2.1.5'
             released  = new Date()
             vcsTag = '2.1.5'
-            attributes = ['omniata-android': 'com.omniata.android.sdk:omniata-android']
+            attributes = ['omniata-android': 'com.omniata.android.library:omniata-android']
             gpg {
                 sign = true //Determines whether to GPG sign the files. The default is false
                 passphrase = 'pa55word' //Optional. The passphrase for GPG signing'
@@ -90,3 +94,4 @@ bintray {
         }
     }
 }
+
