@@ -4,6 +4,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'maven'
 
 group = 'com.omniata.android.library'
+def sdkVersion = "2.1.5"
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
@@ -45,7 +46,7 @@ dependencies {
     compile 'com.google.android.gms:play-services-ads:+'
 }
 
-version = '2.1.5'
+version = sdkVersion
 
 //
 task sourcesJar(type: Jar) {
@@ -82,10 +83,10 @@ bintray {
         publish = true
         vcsUrl = 'https://github.com/Omniata/omniata-android-sdk.git'
         version {
-            name = '2.1.5'
-            desc = 'Omniata Android SDK 2.1.5'
+            name = sdkVersion
+            desc = "Omniata Android SDK" + sdkVersion
             released  = new Date()
-            vcsTag = '2.1.5'
+            vcsTag = sdkVersion
             attributes = ['omniata-android': 'com.omniata.android.library:omniata-android']
             gpg {
                 sign = true //Determines whether to GPG sign the files. The default is false
