@@ -6,11 +6,13 @@ Run gradle task 'exportJar' of 'sdk' module to export the code to jar file. The 
 Build the module to upload to jcenter, do as follows:
 
 a. modify the 'sdkVersion' number in build.gradle file of 'omniata-android' module
+
 b. build the project and run the following two command in terminal
 ```bash
 gradle install
 gradle bintrayupload
 ```
+
 c. the SDK can be used by including the following line in project's build.gradle file
 ```
 dependencies {
