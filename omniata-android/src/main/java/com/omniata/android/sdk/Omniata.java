@@ -26,7 +26,7 @@ public class Omniata {
 	
 	private static final String TAG       = "Omniata";
 	private static final String EVENT_LOG = "events";
-	private static final String SDK_VERSION = "android-2.1.5";
+	private static final String SDK_VERSION = "android-2.1.6";
 
 	private static Omniata instance;
     private static OmniataChannelEngine channelHandler;
@@ -474,6 +474,14 @@ public class Omniata {
         }
         track("om_push_clicked", parameters);
     }
+
+    /**
+     * Set the event track interval in millisecond, default interval is 1000 if this method is not called
+     * @param milliSec interval in millisecond
+     */
+	public static void setTrackInterval(int milliSec){
+		OmniataEventWorker.setTrackInterval(milliSec);
+	}
 
 	protected static JSONObject getAutomaticParameters() {
 		JSONObject properties = new JSONObject();
