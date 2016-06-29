@@ -168,7 +168,7 @@ Omniata.disablePushNotifications();
 - Calling this method when get the Bundle data of the push message
 ```java
 trackPushNotification(data);
-``
+```
 
 
 #### Set Track Interval between Events
@@ -176,4 +176,4 @@ trackPushNotification(data);
 ```java
 // set the event track interval to be 100 millisecond
 Omniata.setTrackInterval(100);
-``
+```
