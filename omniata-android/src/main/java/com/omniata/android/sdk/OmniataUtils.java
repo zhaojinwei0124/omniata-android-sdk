@@ -25,7 +25,6 @@ import java.util.Scanner;
 	/**
 	 * Set TEST_API by using the org defined by the customer.
 	 * @param org
-	 * @param debug
 	 */
 	/*package*/ static public void setURL(String org){
 		EVENT_API = org + "." + "analyzer." + BASE_API_URL;

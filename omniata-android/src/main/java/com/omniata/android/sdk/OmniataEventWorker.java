@@ -18,9 +18,9 @@ class OmniataEventWorker implements Runnable {
 	private static final int    CONNECTION_TIMEOUT 		= 30 * SECONDS;
 	private static final int    READ_TIMEOUT 	   		= 30 * SECONDS;
 	private static final int	RETRY_CONNECTIVITY_TIME = 16 * SECONDS;
-	private static final int	MIN_TIME_BETWEEN_EVENTS = 1  * SECONDS;
 	private static final int    MAX_BACKOFF_EXP         = 9;				// 2^9 = 512 Seconds ~ 8 minutes
 	private static final int    MAX_RETRIES             = 30;
+	private static int          trackInterval           = 1000;
 
 	private Context 							context;
 	private int 								connectionTimeout;
@@ -55,6 +55,10 @@ class OmniataEventWorker implements Runnable {
 		}
 	}
 
+	public static void setTrackInterval(int milliSec){
+        OmniataLog.i(TAG,"set the event sending interval to be: " + Integer.toString(milliSec) + " millsecond");
+		trackInterval = milliSec;
+	}
 	/**
 	 * Returns the amount of time thread should sleep before attempting to resend.
 	 * Will back off exponentially to prevent pegging servers in case of downtime
@@ -102,13 +106,12 @@ class OmniataEventWorker implements Runnable {
 
 	protected void processEvents() throws InterruptedException {
 		long now = System.currentTimeMillis();
-		
 		JSONObject event = eventLog.blockingPeek();
 		
 		// Events are stored on the servers on one second precision. Waiting here
 		// assures each event has a different timestamp. Different timestamp is needed
 		// for reliable sorting of events (by timestamp).
-		long timeToWait = MIN_TIME_BETWEEN_EVENTS - (System.currentTimeMillis() - now);
+		long timeToWait = trackInterval - (System.currentTimeMillis() - now);
 		if (timeToWait > 0) {
 			Thread.sleep(timeToWait);
 		}
@@ -157,7 +160,6 @@ class OmniataEventWorker implements Runnable {
 			String eventURL = OmniataUtils.getEventAPI(true, debug) + "?" + query;
 			
 			OmniataLog.i(TAG, "Calling event endpoint: " + eventURL);
-			Log.i(TAG,"Calling event endpoint: " + eventURL);
 			URL url = new URL(eventURL);
 
 			connection = (HttpURLConnection)url.openConnection();

@@ -16,7 +16,7 @@ gradle bintrayupload
 c. the SDK can be used by including the following line in project's build.gradle file
 ```
 dependencies {
-    compile 'com.omniata.android-library:omniata-android:2.1.5'
+    compile 'com.omniata.android-library:omniata-android:2.1.6'
 }
 ```
 

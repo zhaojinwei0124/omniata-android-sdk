@@ -10,6 +10,8 @@ import android.widget.Button;
 import com.omniata.android.sdk.Omniata;
 import com.exmaple.omniata.R;
 
+import org.json.JSONArray;
+
 
 /*
  * created by Jun
@@ -71,7 +73,12 @@ public class MainActivity extends Activity {
         button5.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Perform action on click
-                Log.i("channel message: ",Omniata.getChannelmessage().toString());
+                JSONArray message = Omniata.getChannelmessage();
+                if (message != null){
+                    Log.i("channel message: ",Omniata.getChannelmessage().toString());
+                }else{
+                    Log.i("channel message: ","empty");
+                }
             }
         });
 
