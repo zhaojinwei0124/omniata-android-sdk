@@ -21,7 +21,9 @@ dependencies {
 ```
 
 The file stacks can be checked in this link:
-https://dl.bintray.com/junomniata/maven/com/omniata/android/library/omniata-android/2.1.5/
+https://dl.bintray.com/junomniata/maven/com/omniata/android/library/omniata-android/2.1.6/
+And the jcenter link of the SDK is:
+https://bintray.com/junomniata/maven/omniata-android-library/view
 
 ## Features and technical description
 Omniata Android SDK is a library developed by Omniata that allows Android application developers to easily integrate their applications with Omniata services. The key features of the SDK are sending events to Omniata using Event API and requesting content for users using Channel API.
