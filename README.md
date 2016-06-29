@@ -170,3 +170,10 @@ Omniata.disablePushNotifications();
 trackPushNotification(data);
 ``
 
+
+#### Set Track Interval between Events
+- Default event tracking interval is 1 second in order to keep the events in order from the server side, if more frequent events sending is required, calling this method
+```java
+// set the event track interval to be 100 millisecond
+Omniata.setTrackInterval(100);
+``
