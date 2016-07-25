@@ -1,6 +1,7 @@
 package com.omniata.android.sdk;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -445,7 +446,18 @@ public class Omniata {
 			OmniataLog.e(TAG, e.toString());
 		}
 	}
-	
+
+	/**
+	 * Auto get the push registration id and send to Omniata.
+	 * @param gcmSenderId
+     */
+	public static void autoEnablePushNotifications(String gcmSenderId){
+		OmniataUtils.gcmSenderId = gcmSenderId;
+		Intent intent = new Intent(instance.context,OmniataRegistrationService.class);
+		instance.context.startService(intent);
+	}
+
+
 	public static void disablePushNotifications() {
 		track("om_gcm_disable");
 	}

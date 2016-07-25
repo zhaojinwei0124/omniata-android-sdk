@@ -14,12 +14,14 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 /* package */ class OmniataUtils {
+	public static boolean sentTokenToServer    = false;
+	public static boolean registrationComplete = false;
+	public static String       gcmSenderId     = "";
 	static String BASE_API_URL	   = "omniata.com";
-	static String API 			   = "api.omniata.com";
-	static String TEST_API 		   = "api-test.omniata.com";
 	static String TEST_EVENT_API   = "";
 	static String EVENT_API        = "";
 	static String CHANNEL_API 	   = "";
+
 	
 	
 	/**

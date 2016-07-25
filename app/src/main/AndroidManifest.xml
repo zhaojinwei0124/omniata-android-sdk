@@ -1,9 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.exmaple.omniata" >
+    package="com.example.omniata" >
 
     <uses-sdk
         android:minSdkVersion="11"
         android:targetSdkVersion="23" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.example.omniata.permission.C2D_MESSAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application
@@ -11,6 +13,19 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        <service
+            android:name="com.omniata.android.sdk.OmniataMyInstanceIDService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.gms.iid.InstanceID" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name="com.omniata.android.sdk.OmniataRegistrationService"
+            android:exported="false">
+        </service>
+
         <activity
             android:name="com.example.omniata.MainActivity"
             android:label="@string/app_name" >

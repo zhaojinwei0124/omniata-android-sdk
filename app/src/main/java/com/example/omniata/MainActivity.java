@@ -7,8 +7,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.omniata.android.sdk.Omniata;
-import com.exmaple.omniata.R;
 
 import org.json.JSONArray;
 
@@ -20,7 +21,8 @@ import org.json.JSONArray;
 
 
 public class MainActivity extends Activity {
-
+    private static final String TAG = "MainActivity";
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +43,7 @@ public class MainActivity extends Activity {
         Button button5 = (Button) findViewById(R.id.button5);
         Button button6 = (Button) findViewById(R.id.button6);
         Button button7 = (Button) findViewById(R.id.button7);
+
 
         button1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -84,8 +87,15 @@ public class MainActivity extends Activity {
 
         button6.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // Perform action on click
-                Omniata.enablePushNotifications("RegistrationID");
+                // Enable push notification with push token
+//                Omniata.enablePushNotifications("RegistrationID");
+
+                // Auto enable push notification by adding the google-services.json file under the project.
+                // check detail how to get the google-services.json here:
+                // https://developers.google.com/mobile/add?platform=android&cntapi=gcm&cnturl=https:%2F%2Fdevelopers.google.com%2Fcloud-messaging%2Fandroid%2Fclient&cntlbl=Continue%20Adding%20GCM%20Support&%3Fconfigured%3Dtrue
+                if (checkPlayServices()) {
+                    Omniata.autoEnablePushNotifications(getString(R.string.gcm_defaultSenderId));
+                }
             }
         });
 
@@ -96,6 +106,27 @@ public class MainActivity extends Activity {
             }
         });
 
+    }
+
+    /**
+     * Check the device to make sure it has the Google Play Services APK. If
+     * it doesn't, display a dialog that allows users to download the APK from
+     * the Google Play Store or enable it in the device's system settings.
+     */
+    private boolean checkPlayServices() {
+        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (apiAvailability.isUserResolvableError(resultCode)) {
+                apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST)
+                        .show();
+            } else {
+                Log.i(TAG, "This device is not supported.");
+                finish();
+            }
+            return false;
+        }
+        return true;
     }
 
 }
