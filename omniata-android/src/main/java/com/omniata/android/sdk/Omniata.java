@@ -27,7 +27,7 @@ public class Omniata {
 	
 	private static final String TAG       = "Omniata";
 	private static final String EVENT_LOG = "events";
-	private static final String SDK_VERSION = "android-2.1.6";
+	private static final String SDK_VERSION = "android-2.1.7";
 
 	private static Omniata instance;
     private static OmniataChannelEngine channelHandler;
@@ -484,7 +484,7 @@ public class Omniata {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        track("om_push_clicked", parameters);
+        track("om_push_received", parameters);
     }
 
     /**

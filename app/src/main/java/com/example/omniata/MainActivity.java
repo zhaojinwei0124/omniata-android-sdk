@@ -93,6 +93,7 @@ public class MainActivity extends Activity {
                 // Auto enable push notification by adding the google-services.json file under the project.
                 // check detail how to get the google-services.json here:
                 // https://developers.google.com/mobile/add?platform=android&cntapi=gcm&cnturl=https:%2F%2Fdevelopers.google.com%2Fcloud-messaging%2Fandroid%2Fclient&cntlbl=Continue%20Adding%20GCM%20Support&%3Fconfigured%3Dtrue
+                // R.string.gcm_defaultSenderId is the value of "project_number" in google-services.json file.
                 if (checkPlayServices()) {
                     Omniata.autoEnablePushNotifications(getString(R.string.gcm_defaultSenderId));
                 }

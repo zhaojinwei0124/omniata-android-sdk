@@ -15,10 +15,10 @@ public class OmniataMyInstanceIDService extends InstanceIDListenerService {
      * the previous token had been compromised. This call is initiated by the
      * InstanceID provider.
      */
-    // [START refresh_token]
     @Override
     public void onTokenRefresh() {
         // Fetch updated Instance ID token and notify our app's server of any changes (if applicable).
+        OmniataLog.i(TAG, "refreshing push token");
         Intent intent = new Intent(this, OmniataRegistrationService.class);
         startService(intent);
     }

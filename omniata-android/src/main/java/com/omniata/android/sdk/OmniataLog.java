@@ -2,7 +2,8 @@ package com.omniata.android.sdk;
 
 import android.util.Log;
 
-/* package */ class OmniataLog {
+/* package */
+public class OmniataLog {
 	private static int priority = Log.ASSERT;
 	public static void setPriority(int priority) {OmniataLog.priority = priority;}
 	public static int wtf(String tag, String msg) {return log(Log.ASSERT, tag, msg, null);}
