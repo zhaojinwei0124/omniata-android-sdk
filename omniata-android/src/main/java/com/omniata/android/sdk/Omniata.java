@@ -437,6 +437,10 @@ public class Omniata {
             }).start();
     }
 
+	/**
+	 * enable push with push token
+	 * @param registrationId
+     */
 	public static void enablePushNotifications(String registrationId) {
 		JSONObject params = new JSONObject();
 		try {
@@ -449,7 +453,7 @@ public class Omniata {
 
 	/**
 	 * Auto get the push registration id and send to Omniata.
-	 * @param gcmSenderId
+	 * @param gcmSenderId, sender ID/ project number of push
      */
 	public static void autoEnablePushNotifications(String gcmSenderId){
 		OmniataUtils.gcmSenderId = gcmSenderId;
@@ -458,6 +462,9 @@ public class Omniata {
 	}
 
 
+	/**
+	 * disalbe push notification of this user in omniata.
+	 */
 	public static void disablePushNotifications() {
 		track("om_gcm_disable");
 	}

@@ -44,6 +44,7 @@ import java.util.concurrent.TimeUnit;
 		try {
 			return helper.getWritableDatabase();
 		} catch (SQLiteException e) {
+			OmniataLog.e(TAG, e.getMessage());
 			return null;
 		}
 	}

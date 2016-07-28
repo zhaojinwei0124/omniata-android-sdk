@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 /* package */ class OmniataDBHelper extends SQLiteOpenHelper {
 	private static final String DATABASE_NAME = "omniata.db";
+	private static final String TAG = "OmniataDBHelper";
 	private static final int DATABASE_VERSION = 1;
 	
 	private String name;
@@ -60,10 +61,15 @@ import android.database.sqlite.SQLiteOpenHelper;
 	}
 	
 	public static int size(SQLiteDatabase db, String name) {
-		Cursor c = db.rawQuery("SELECT count(id) FROM " + name + ";", null);
-		c.moveToFirst();
-		int sz = c.getInt(0);
-		c.close();
-		return sz;
+		try {
+			Cursor c = db.rawQuery("SELECT count(id) FROM " + name + ";", null);
+			c.moveToFirst();
+			int sz = c.getInt(0);
+			c.close();
+			return sz;
+		} catch (Exception e) {
+			OmniataLog.e(TAG, e.getMessage());
+			return 0;
+		}
 	}
 }
