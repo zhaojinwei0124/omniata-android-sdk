@@ -27,7 +27,7 @@ public class Omniata {
 	
 	private static final String TAG       = "Omniata";
 	private static final String EVENT_LOG = "events";
-	private static final String SDK_VERSION = "android-2.1.7";
+	private static final String SDK_VERSION = "android-2.1.8";
 
 	private static Omniata instance;
     private static OmniataChannelEngine channelHandler;
@@ -57,31 +57,55 @@ public class Omniata {
         }
 	}
 
-    /**
-     * Initialize the Omniata API with different URL for different Omniata services
-     * @param context
-     * @param apiKey
-     * @param userID
-     * @param org	  organization name of the URl, new url will be org.analyzer.omniata.com and org.engager.omniata.com
-     * @param baseUrl base Url for the tracking.
-     * @throws IllegalArgumentException
+	/**
+	 * Initialize the Omniata API with some different URL and other extra om_load parameters
+	 * @param context
+	 * @param apiKey
+	 * @param userID
+	 * @param org    organization name of the URl, new url will be org.analyzer.omniata.com and org.engager.omniata.com
+	 * @param baseUrl
+	 * @param parameters
+	 * @throws IllegalArgumentException
      */
-    public static void initialize(Context context, String apiKey, String userID, String org, String baseUrl) throws IllegalArgumentException{
-        synchronized(Omniata.class) {
-            if (instance == null) {
-                OmniataLog.i(TAG, "Initializing Omniata API");
-                instance = new Omniata(context, apiKey, userID, org);
-                channelHandler = new OmniataChannelEngine();
-            }
+	public static void initialize(Context context, String apiKey, String userID, String org, String baseUrl, JSONObject parameters) throws IllegalArgumentException{
+		synchronized(Omniata.class) {
+			if (instance == null) {
+				OmniataLog.i(TAG, "Initializing Omniata API with more complexity");
+				instance = new Omniata(context, apiKey, userID, org);
+				channelHandler = new OmniataChannelEngine();
+			}
 			/*
 			 * Since this singleton may persist across application launches
 			 * we need to support re-initialization of the SDK
 			 */
-            instance._initialize(context, apiKey, userID, org);
-            OmniataUtils.setURL(org, baseUrl);
-            trackLoad(null);
-        }
-    }
+			instance._initialize(context, apiKey, userID, org);
+			if (baseUrl != null){
+				OmniataUtils.setURL(org, baseUrl);
+			}
+			trackLoad(parameters);
+		}
+	}
+
+	/**
+	 * Initilize for unity usage with string parameters.
+	 * @param context
+	 * @param apiKey
+	 * @param userID
+	 * @param org
+	 * @param baseUrl
+	 * @param parameters
+	 * @throws IllegalArgumentException
+     */
+	public static void unityInitialize(Context context, String apiKey, String userID, String org, String baseUrl, String parameters)throws IllegalArgumentException{
+		JSONObject myParameters = new JSONObject();
+		if (parameters != null) {
+			OmniataLog.i("extra om_load parameters:",parameters);
+			myParameters =  unityJsonGenerator(parameters);
+		} else {
+			myParameters = null;
+		}
+		initialize(context, apiKey, userID, org, baseUrl, myParameters);
+	}
 
 	public static void setLogLevel(int priority) {
 		OmniataLog.setPriority(priority);
