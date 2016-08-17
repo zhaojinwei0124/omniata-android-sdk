@@ -47,4 +47,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:text="@string/button7" />
+    <Button
+        android:id="@+id/button8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:text="@string/button8" />
 </LinearLayout>

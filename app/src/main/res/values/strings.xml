@@ -8,5 +8,6 @@
     <string name="button5">get_channel_message</string>
     <string name="button6">enable_push</string>
     <string name="button7">om_alias</string>
+    <string name="button8">load_channel_message_with_handler</string>
 
 </resources>

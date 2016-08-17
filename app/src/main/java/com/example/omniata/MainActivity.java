@@ -43,6 +43,7 @@ public class MainActivity extends Activity {
         Button button5 = (Button) findViewById(R.id.button5);
         Button button6 = (Button) findViewById(R.id.button6);
         Button button7 = (Button) findViewById(R.id.button7);
+        Button button8 = (Button) findViewById(R.id.button8);
 
 
         button1.setOnClickListener(new View.OnClickListener() {
@@ -107,6 +108,13 @@ public class MainActivity extends Activity {
             }
         });
 
+        button8.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Perform action on click
+                MyHandler myChannelHandler = new MyHandler();
+                Omniata.channel(2,myChannelHandler);
+            }
+        });
     }
 
     /**

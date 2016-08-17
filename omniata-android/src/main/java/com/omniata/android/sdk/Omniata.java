@@ -27,7 +27,7 @@ public class Omniata {
 	
 	private static final String TAG       = "Omniata";
 	private static final String EVENT_LOG = "events";
-	private static final String SDK_VERSION = "android-2.1.8";
+	private static final String SDK_VERSION = "android-2.1.9";
 
 	private static Omniata instance;
     private static OmniataChannelEngine channelHandler;
@@ -350,6 +350,19 @@ public class Omniata {
         synchronized(Omniata.class) {
 			assertInitialized();
 			instance._channel(channelId, channelHandler);
+		}
+	}
+
+    /**
+     * Fetches content with customized handler
+     * @param channelId
+     * @param myChannelHandler
+     * @throws IllegalStateException
+     */
+	public static void channel(int channelId, OmniataChannelEngine myChannelHandler) throws IllegalStateException{
+		synchronized(Omniata.class) {
+			assertInitialized();
+			instance._channel(channelId, myChannelHandler);
 		}
 	}
 
