@@ -144,9 +144,11 @@ try {
 //but it can only be retrieved after the finish of the loading,
 //otherwise it will cause null pointer exception, will fix this bug soon.
 int channel_id = 40;
-OmniataChannelEngine mChannel = new OmniataChannelEngine();
 //Load the channel message for certain channel
-Omniata.channel(channel_id, mChannel);
+Omniata.channel(channel_id);
+//Load the channel message with customized handler. MyHandler is a class extends OmniataChannelEngine, added customized action by Override onSuccess method.
+MyHandler myChannelHandler = new MyHandler();
+Omniata.channel(channel_id,myChannelHandler);
 ```
 
 #### Push Notification
