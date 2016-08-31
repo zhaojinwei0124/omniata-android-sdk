@@ -27,7 +27,7 @@ public class Omniata {
 	
 	private static final String TAG       = "Omniata";
 	private static final String EVENT_LOG = "events";
-	private static final String SDK_VERSION = "android-2.1.9";
+	private static final String SDK_VERSION = "android-2.1.10";
 
 	private static Omniata instance;
     private static OmniataChannelEngine channelHandler;
@@ -560,7 +560,9 @@ public class Omniata {
 			properties.put("om_device", android.os.Build.MODEL);
 			
 			// Android-specific parameters
-			properties.put("om_android_id", Secure.ANDROID_ID);
+			String android_id = Secure.getString(instance.context.getContentResolver(),
+					Secure.ANDROID_ID);
+			properties.put("om_android_id", android_id);
 			properties.put("om_android_serial", android.os.Build.SERIAL);
 			properties.put("om_android_device", android.os.Build.DEVICE);
 			properties.put("om_android_hardware", android.os.Build.HARDWARE);
