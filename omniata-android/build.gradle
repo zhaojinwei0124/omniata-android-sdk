@@ -5,7 +5,7 @@ apply plugin: 'maven'
 
 
 group = 'com.omniata.android.library'
-def sdkVersion = "2.1.6"
+def sdkVersion = "2.1.11"
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"

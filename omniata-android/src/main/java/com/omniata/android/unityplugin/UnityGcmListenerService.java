@@ -40,9 +40,18 @@ public class UnityGcmListenerService extends GcmListenerService {
     @Override
     public void onMessageReceived(String from, Bundle data) {
         OmniataLog.i(TAG, "onMessageReceived");
+        try {
+            Omniata.trackPushNotification(data);
+        } catch (Exception e){
+            // track push will not be available if the SDK is not initialize but receive an push message.
+            OmniataLog.e(TAG, "Exception of tracking push " + e.toString() );
+        }
+        // e.g. content value is something like this {"data":{"message":"<message>"}}
         String message = data.getString("message");
-        Omniata.trackPushNotification(data);
-        UnityUtil.sendMessage(RECEIVER_CLASS_NAME, ON_MESSAGE_RECEIVED, message);
+        if (message != null){
+            UnityUtil.sendMessage(RECEIVER_CLASS_NAME, ON_MESSAGE_RECEIVED, message);
+        }
+
     }
 
     /**

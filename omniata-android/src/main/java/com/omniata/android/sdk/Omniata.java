@@ -27,7 +27,7 @@ public class Omniata {
 	
 	private static final String TAG       = "Omniata";
 	private static final String EVENT_LOG = "events";
-	private static final String SDK_VERSION = "android-2.1.10";
+	private static final String SDK_VERSION = "android-2.1.11";
 
 	private static Omniata instance;
     private static OmniataChannelEngine channelHandler;
