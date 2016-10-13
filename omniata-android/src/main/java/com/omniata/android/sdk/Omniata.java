@@ -27,7 +27,7 @@ public class Omniata {
 	
 	private static final String TAG       = "Omniata";
 	private static final String EVENT_LOG = "events";
-	private static final String SDK_VERSION = "android-2.1.11";
+	private static final String SDK_VERSION = "android-2.1.12";
 
 	private static Omniata instance;
     private static OmniataChannelEngine channelHandler;
@@ -35,11 +35,11 @@ public class Omniata {
 
 	/**
 	 * Initialize the Omniata API with different URL for different Omniata services
-	 * @param context
-	 * @param apiKey
-	 * @param userID
+	 * @param context current context
+	 * @param apiKey api key
+	 * @param userID user id
 	 * @param org	organization name of the URl, new url will be org.analyzer.omniata.com and org.engager.omniata.com
-	 * @throws IllegalArgumentException
+	 * @throws IllegalArgumentException illegal argument
 	 */
 	public static void initialize(Context context, String apiKey, String userID, String org) throws IllegalArgumentException{
 		synchronized(Omniata.class) {			
@@ -59,13 +59,13 @@ public class Omniata {
 
 	/**
 	 * Initialize the Omniata API with some different URL and other extra om_load parameters
-	 * @param context
-	 * @param apiKey
-	 * @param userID
+	 * @param context current context
+	 * @param apiKey api key
+	 * @param userID user id
 	 * @param org    organization name of the URl, new url will be org.analyzer.omniata.com and org.engager.omniata.com
-	 * @param baseUrl
-	 * @param parameters
-	 * @throws IllegalArgumentException
+	 * @param baseUrl base url
+	 * @param parameters params
+	 * @throws IllegalArgumentException illegal argument
      */
 	public static void initialize(Context context, String apiKey, String userID, String org, String baseUrl, JSONObject parameters) throws IllegalArgumentException{
 		synchronized(Omniata.class) {
@@ -88,13 +88,13 @@ public class Omniata {
 
 	/**
 	 * Initilize for unity usage with string parameters.
-	 * @param context
-	 * @param apiKey
-	 * @param userID
-	 * @param org
-	 * @param baseUrl
-	 * @param parameters
-	 * @throws IllegalArgumentException
+	 * @param context current context
+	 * @param apiKey api key
+	 * @param userID userid
+	 * @param org org
+	 * @param baseUrl base url
+	 * @param parameters params
+	 * @throws IllegalArgumentException illegal argument
      */
 	public static void unityInitialize(Context context, String apiKey, String userID, String org, String baseUrl, String parameters)throws IllegalArgumentException{
 		JSONObject myParameters = new JSONObject();
@@ -115,7 +115,7 @@ public class Omniata {
 	/**
 	 * Tracks a parameterless event
 	 * 
-	 * @param eventType
+	 * @param eventType event type
 	 * @throws IllegalArgumentException if eventType is null or empty
 	 * @throws IllegalStateException if SDK not initialized 
 	 */
@@ -125,8 +125,8 @@ public class Omniata {
 
 	/**
 	 * Tracks an event with parameters
-	 * @param eventType
-	 * @param parameters
+	 * @param eventType evety type
+	 * @param parameters extra pramas
 	 * @throws IllegalArgumentException	if eventType is null or empty
 	 * @throws IllegalStateException	if SDK not initialized  
 	 */
@@ -139,7 +139,7 @@ public class Omniata {
 	
 	/**
 	 * Track Load with unity version info getting from unity code.
-	 * @param para
+	 * @param para extra params
 	 */
 	public static void unityTrackLoad(String para){
 		trackLoad(unityJsonGenerator(para));
@@ -147,8 +147,8 @@ public class Omniata {
 	
 	  /**
 	  * Track custom event for usage in Unity
-	  * @param eventType
-	  * @param para				
+	  * @param eventType event type
+	  * @param para	extra params
 	  */
 	 public static void unityTrack(String eventType, String para){
 	     instance._track(eventType, unityJsonGenerator(para));
@@ -157,9 +157,9 @@ public class Omniata {
 
 	 /**
 	  * Track revenue for usage in unity
-	  * @param total
-	  * @param currencyCode
-	  * @param para
+	  * @param total total value
+	  * @param currencyCode currency
+	  * @param para extra params
 	  */
 	 public static void unityTrackRevenue(double total, String currencyCode, String para){
 		 JSONObject revenuePara = unityJsonGenerator(para);
@@ -180,7 +180,7 @@ public class Omniata {
 	 /**
 	  * String from Unity to JSONobject, string from Unity is URL Encoded.
 	  * @param para
-	  * @return
+	  * @return return json params
 	  */
 	 private static JSONObject unityJsonGenerator(String para){
 		 JSONObject parameters = new JSONObject();
@@ -203,8 +203,8 @@ public class Omniata {
 
     /**
      * Get the string of channelMessages
-     * @return
-     * @throws IllegalStateException
+     * @return null or channel message
+     * @throws IllegalStateException illegal statement
      */
     @SuppressWarnings("static-access")
     public static String unityGetChannelmessage() throws IllegalStateException{
@@ -217,7 +217,7 @@ public class Omniata {
     }
 	/**
 	 * unity_log log method for using in Unity3D 
-	 * @param message
+	 * @param message messgage
 	 */
 	public static void unity_log(String message){
 	   Log.i("Omniata", message);
@@ -252,8 +252,8 @@ public class Omniata {
 
     /**
      * Set the base URL for Event and Channel API.
-     * @param url
-     * @throws IllegalStateException
+     * @param url base url
+     * @throws IllegalStateException illegal statement exception
      */
     public static void setBaseUrl(String url) throws  IllegalStateException{
         OmniataUtils.setURL(null, url);
@@ -261,7 +261,8 @@ public class Omniata {
 
     /**
      * Sets the current user id used to track events with enableDeghost tag
-     * @param userId
+     * @param userId user id
+	 * @param enableDeghost enable deghost tag
      * @throws IllegalArgumentException if userID is null or empty
      * @throws IllegalStateException if SDK not initialized
      */
@@ -278,7 +279,7 @@ public class Omniata {
 
 	/**
 	 * Sets the current user id used to track events
-	 * @param userId
+	 * @param userId user id
 	 */
 	public static void setUserId(String userId)  {
 		setUserId(userId,true);
@@ -286,8 +287,8 @@ public class Omniata {
 
     /**
      * Sets the current API key used to track events with enableDeghost tag
-     * @param apiKey
-     * @param enableDeghost
+     * @param apiKey api key
+     * @param enableDeghost enable deghost tag
      * @throws IllegalArgumentException if apiKey is null or empty
      * @throws IllegalStateException if SDK not initialized
      */
@@ -304,7 +305,7 @@ public class Omniata {
 
 	/**
 	 * Sets the current API key used to track events
-	 * @param apiKey
+	 * @param apiKey api key
 	 */
 	public static void setApiKey(String apiKey) {
         setApiKey(apiKey, true);
@@ -312,9 +313,9 @@ public class Omniata {
 
     /**
      * Sets both the current API key and user id used to track events with enableDeghost tag
-     * @param apiKey
-     * @param userId
-     * @param enableDeghost
+     * @param apiKey api key
+     * @param userId user id
+     * @param enableDeghost enable deghost tag
      * @throws IllegalArgumentException if apiKey and userID are null or empty
      * @throws IllegalStateException if SDK not initialized
      */
@@ -333,8 +334,8 @@ public class Omniata {
 
     /**
      * Sets both the current API key and user id used to track events
-     * @param apiKey
-     * @param userId
+     * @param apiKey api key
+     * @param userId user id
      */
     public static void setBothApiKeyUserId(String apiKey, String userId) {
         setBothApiKeyUserId(apiKey,userId,true);
@@ -355,9 +356,9 @@ public class Omniata {
 
     /**
      * Fetches content with customized handler
-     * @param channelId
-     * @param myChannelHandler
-     * @throws IllegalStateException
+     * @param channelId channel id
+     * @param myChannelHandler channel handler
+     * @throws IllegalStateException illegal statement exception
      */
 	public static void channel(int channelId, OmniataChannelEngine myChannelHandler) throws IllegalStateException{
 		synchronized(Omniata.class) {
@@ -368,8 +369,8 @@ public class Omniata {
 
     /**
      * Get the Json object of channelMessages
-     * @return
-     * @throws IllegalStateException
+     * @return return channel message
+     * @throws IllegalStateException illegal statement exception
      */
     @SuppressWarnings("static-access")
     public static JSONArray getChannelmessage() throws IllegalStateException{
@@ -422,7 +423,7 @@ public class Omniata {
     /**
      * Tracks the Advertiser ID and Android ID
      *
-     * @throws IllegalStateException
+     * @throws IllegalStateException illegal statement exception
      */
 	public static void trackAdvertiserID() throws IllegalStateException {
         trackAdvertiserID(null);
@@ -436,8 +437,8 @@ public class Omniata {
      * inside of the tracking event, otherwise there will be only
      * om_android_id="device_android_id" parameter inside of the event.
      *
-     * @param additionalParams
-     * @throws IllegalStateException
+     * @param additionalParams extra params
+     * @throws IllegalStateException statement exception
      */
     public static void trackAdvertiserID(JSONObject additionalParams) throws IllegalStateException{
         final JSONObject tempParas = additionalParams;
@@ -476,7 +477,7 @@ public class Omniata {
 
 	/**
 	 * enable push with push token
-	 * @param registrationId
+	 * @param registrationId project id
      */
 	public static void enablePushNotifications(String registrationId) {
 		JSONObject params = new JSONObject();
@@ -508,7 +509,7 @@ public class Omniata {
 
     /**
      * Track the push notification of the push message.
-     * @param data
+     * @param data push data
      */
     public static void trackPushNotification(Bundle data) {
         JSONObject parameters = new JSONObject();

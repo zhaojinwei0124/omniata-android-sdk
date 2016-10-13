@@ -4,9 +4,6 @@ import android.content.Intent;
 
 import com.google.android.gms.iid.InstanceIDListenerService;
 
-/**
- * Created by junliu on 7/1/16.
- */
 public class OmniataMyInstanceIDService extends InstanceIDListenerService {
     private static final String TAG = "OmniataMyInstanceIDLS";
 

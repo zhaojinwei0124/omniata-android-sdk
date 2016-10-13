@@ -4,9 +4,7 @@ import android.os.Bundle;
 
 import com.google.android.gms.gcm.GcmListenerService;
 
-/**
- * Created by junliu on 7/27/16.
- */
+
 public class OmniataGcmListenerService  extends GcmListenerService {
     private static final String TAG = "OmniataGcmListenerService";
 
@@ -19,14 +17,22 @@ public class OmniataGcmListenerService  extends GcmListenerService {
      */
     @Override
     public void onMessageReceived(String from, Bundle data) {
+        try {
+            Omniata.trackPushNotification(data);
+        } catch (Exception e){
+            // track push will not be available if the SDK is not initialize but receive an push message.
+            OmniataLog.e(TAG, "Exception of tracking push " + e.toString() );
+        }
         String message = data.getString("message");
-        Omniata.trackPushNotification(data);
-        sendNotification(message);
+        if (message != null){
+            OmniataLog.i(TAG, "onMessageReceived");
+            sendNotification(message);
+        }
     }
 
     /**
      * Method override to display the message
-     * @param message
+     * @param message push notification message
      */
     public void sendNotification(String message){
 

@@ -6,9 +6,6 @@ import android.widget.Toast;
 import com.omniata.android.sdk.OmniataLog;
 import com.unity3d.player.UnityPlayer;
 
-/**
- * Created by junliu on 7/27/16.
- */
 public class UnityUtil {
     private static final String TAG = "UnityUtil";
 
