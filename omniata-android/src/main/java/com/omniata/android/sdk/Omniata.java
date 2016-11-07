@@ -10,6 +10,8 @@ import android.util.Log;
 
 import com.google.android.gms.ads.identifier.AdvertisingIdClient;
 import com.google.android.gms.ads.identifier.AdvertisingIdClient.Info;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.RemoteMessage;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,6 +22,7 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.util.Iterator;
 import java.util.Locale;
+import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -27,7 +30,7 @@ public class Omniata {
 	
 	private static final String TAG       = "Omniata";
 	private static final String EVENT_LOG = "events";
-	private static final String SDK_VERSION = "android-2.1.12";
+	private static final String SDK_VERSION = "android-2.1.13";
 
 	private static Omniata instance;
     private static OmniataChannelEngine channelHandler;
@@ -475,62 +478,133 @@ public class Omniata {
             }).start();
     }
 
-	/**
-	 * enable push with push token
-	 * @param registrationId project id
+    /**
+     * enable push with push token and push event type as well
+     * @param eventType
+     * @param registrationId
      */
-	public static void enablePushNotifications(String registrationId) {
-		JSONObject params = new JSONObject();
-		try {
-			params.put("om_registration_id", registrationId);
-			track("om_gcm_enable", params);
-		} catch (JSONException e) {
-			OmniataLog.e(TAG, e.toString());
-		}
-	}
+    public static void enablePushNotifications(String eventType, String registrationId){
+        if ( eventType.equals("fcm") ){
+            eventType = "om_fcm_enable";
+        } else {
+            eventType = "om_gcm_enable";
+        }
+        JSONObject params = new JSONObject();
+        try {
+            params.put("om_registration_id", registrationId);
+            track(eventType, params);
+        } catch (JSONException e) {
+            OmniataLog.e(TAG, e.toString());
+        }
+    }
 
 	/**
-	 * Auto get the push registration id and send to Omniata.
-	 * @param gcmSenderId, sender ID/ project number of push
+	 * enable push with push token
+	 * @param registrationId registraion id/ push token
      */
-	public static void autoEnablePushNotifications(String gcmSenderId){
-		OmniataUtils.gcmSenderId = gcmSenderId;
-		Intent intent = new Intent(instance.context,OmniataRegistrationService.class);
-		instance.context.startService(intent);
+	public static void enablePushNotifications(String registrationId) {
+        enablePushNotifications(null, registrationId);
 	}
+
+
+    public static void autoEnablePushNotifications(String type, String gcmSenderId){
+        if ( (type !=  null ) && (type.equals("fcm") ) ){
+            String token = FirebaseInstanceId.getInstance().getToken();
+            if ( !token.equals("") || token != null){
+                Omniata.enablePushNotifications("fcm", token);
+            } else {
+                OmniataLog.e(TAG, "Cannot get the push token");
+            }
+        } else {
+            OmniataUtils.gcmSenderId = gcmSenderId;
+            Intent intent = new Intent(instance.context,OmniataRegistrationService.class);
+            instance.context.startService(intent);
+        }
+    }
+
+    /**
+     * Auto get the push registration id and send to Omniata.
+     * @param gcmSenderId, sender ID/ project number of push
+     */
+    public static void autoEnablePushNotifications(String gcmSenderId){
+        autoEnablePushNotifications(null, gcmSenderId);
+    }
 
 
 	/**
 	 * disalbe push notification of this user in omniata.
 	 */
-	public static void disablePushNotifications() {
-		track("om_gcm_disable");
+	public static void disablePushNotifications(String type) {
+        if ( type.equals("fcm") ) {
+            track("om_fcm_disable");
+        } else {
+            track("om_gcm_disable");
+        }
 	}
 
     /**
-     * Track the push notification of the push message.
-     * @param data push data
+     * disalbe push notification of this user in omniata.
      */
-    public static void trackPushNotification(Bundle data) {
+    public static void disablePushNotifications() {
+        disablePushNotifications(null);
+    }
+
+    /**
+     * Track the push notification of the push message, data content type
+	 * @param mapData mapData
+     */
+    public static void trackPushNotification(Map<String, String> mapData) {
         JSONObject parameters = new JSONObject();
         try {
-            for (String key : data.keySet()) {
-                Object value = data.get(key);
-                if (key.equals("notification")) {
-                    for (String notifKey : ((Bundle) value).keySet()) {
-                        Object notifValue = ((Bundle) value).get(notifKey);
-                        parameters.put(notifKey, notifValue.toString());
-                    }
-                }
-                else {
+            for (String key : mapData.keySet()) {
+                Object value = mapData.get(key);
                     parameters.put(key, value.toString());
-                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
         track("om_push_received", parameters);
     }
+
+	/**
+	 * Track the push notificaiotn of the push message, notification content type
+	 * @param notification notification object
+     */
+	public static void trackPushNotification(RemoteMessage.Notification notification){
+		JSONObject parameters = new JSONObject();
+		try {
+			parameters.put("body", notification.getBody());
+			parameters.put("title", notification.getTitle());
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		track("om_push_received", parameters);
+	}
+
+	/**
+	 * Track the push notification of the push message.
+	 * @param data push data
+	 */
+	public static void trackPushNotification(Bundle data) {
+		JSONObject parameters = new JSONObject();
+		try {
+			for (String key : data.keySet()) {
+				Object value = data.get(key);
+				if (key.equals("notification")) {
+					for (String notifKey : ((Bundle) value).keySet()) {
+						Object notifValue = ((Bundle) value).get(notifKey);
+						parameters.put(notifKey, notifValue.toString());
+					}
+				}
+				else {
+					parameters.put(key, value.toString());
+				}
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		track("om_push_received", parameters);
+	}
 
     /**
      * Set the event track interval in millisecond, default interval is 1000 if this method is not called

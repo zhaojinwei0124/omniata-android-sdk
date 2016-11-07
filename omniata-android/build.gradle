@@ -23,6 +23,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+//    lintOptions {
+//        abortOnError false
+//    }
 }
 
 //task to delete the old jar
@@ -46,6 +49,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.google.android.gms:play-services-ads:8.4.0'
     compile 'com.google.android.gms:play-services-gcm:8.4.0'
+    compile 'com.google.firebase:firebase-messaging:9.6.1'
     compile files('libs/unity.jar')
 }
 
