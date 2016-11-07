@@ -204,8 +204,11 @@ import java.util.concurrent.TimeUnit;
 		
 		synchronized(this) {
 			String data = e.toString();
-			rowID = OmniataDBHelper.insert(getDB(), name, data);
-			
+			try {
+				rowID = OmniataDBHelper.insert(getDB(), name, data);
+			} catch (Exception exception) {
+				rowID = -1;
+			}
 			if (rowID != -1) {
 				size++;
 				notifyAll();
