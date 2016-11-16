@@ -261,7 +261,7 @@ public class Omniata {
 
     /**
      * Sets the current user id used to track events with enableDeghost tag
-     * @param userId user id
+     * @param userId new user id
 	 * @param enableDeghost enable deghost tag
      * @throws IllegalArgumentException if userID is null or empty
      * @throws IllegalStateException if SDK not initialized
@@ -279,7 +279,7 @@ public class Omniata {
 
 	/**
 	 * Sets the current user id used to track events
-	 * @param userId user id
+	 * @param userId new user id
 	 */
 	public static void setUserId(String userId)  {
 		setUserId(userId,true);
@@ -314,7 +314,7 @@ public class Omniata {
     /**
      * Sets both the current API key and user id used to track events with enableDeghost tag
      * @param apiKey api key
-     * @param userId user id
+     * @param userId new user id
      * @param enableDeghost enable deghost tag
      * @throws IllegalArgumentException if apiKey and userID are null or empty
      * @throws IllegalStateException if SDK not initialized
@@ -569,7 +569,7 @@ public class Omniata {
 			properties.put("om_android_serial", android.os.Build.SERIAL);
 			properties.put("om_android_device", android.os.Build.DEVICE);
 			properties.put("om_android_hardware", android.os.Build.HARDWARE);
-		
+
 			if (locale != null) {
 				properties.put("om_locale", locale);
 			}

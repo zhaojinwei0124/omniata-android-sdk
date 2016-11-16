@@ -10,6 +10,7 @@ import android.widget.Button;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.omniata.android.sdk.Omniata;
+import com.omniata.android.sdk.OmniataChannelEngine;
 
 import org.json.JSONArray;
 
@@ -111,8 +112,7 @@ public class MainActivity extends Activity {
         button8.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Perform action on click
-                MyHandler myChannelHandler = new MyHandler();
-                Omniata.channel(2,myChannelHandler);
+                getChannelMessages(2);
             }
         });
     }
@@ -136,6 +136,31 @@ public class MainActivity extends Activity {
             return false;
         }
         return true;
+    }
+
+    public void getChannelMessages(float channelId) {
+        Log.i(TAG, "getChannelMessages()");
+
+        int channelIdInt = Math.round(channelId);
+
+        OmniataChannelEngine mChannel = new OmniataChannelEngine() {
+            @Override
+            public void onError(int channel, Exception e) {
+                super.onError(channel, e);
+                Log.i(TAG, "failed to get channel message");
+
+            }
+
+            @Override
+            public void onSuccess(int channel, JSONArray content) {
+                super.onSuccess(channel, content);
+                Log.i(TAG, "get channel message successfully");
+                Log.i(TAG,content.toString());
+            }
+        };
+
+        //Load the channel message for certain channel
+        Omniata.channel(channelIdInt, mChannel);
     }
 
 }
