@@ -13,7 +13,7 @@ import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.Scanner;
 
-/* package */ class OmniataUtils {
+class OmniataUtils {
 	public static boolean sentTokenToServer    = false;
 	public static boolean registrationComplete = false;
 	public static String       gcmSenderId     = "";
