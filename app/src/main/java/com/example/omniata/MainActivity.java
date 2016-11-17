@@ -96,8 +96,16 @@ public class MainActivity extends Activity {
                 // https://developers.google.com/mobile/add?platform=android&cntapi=gcm&cnturl=https:%2F%2Fdevelopers.google.com%2Fcloud-messaging%2Fandroid%2Fclient&cntlbl=Continue%20Adding%20GCM%20Support&%3Fconfigured%3Dtrue
                 // R.string.gcm_defaultSenderId is the value of "project_number" in google-services.json file.
                 if (checkPlayServices()) {
-                    Omniata.autoEnablePushNotifications("fcm", null);
-//                    Omniata.autoEnablePushNotifications(getString(R.string.gcm_defaultSenderId));
+                    // Enable sending FCM push tokens
+                    Omniata.enableFcmPushNotifications();
+                    // Enable sending GCM push tokens
+                    Omniata.autoEnablePushNotifications(getString(R.string.gcm_defaultSenderId));
+
+                    // Disable sending push to FCM
+                    // Omniata.disablePushNotifications("fcm");
+                    // Disable sending push to GCM
+                    // Omniata.disablePushNotifications();
+
                 }
             }
         });
@@ -105,8 +113,7 @@ public class MainActivity extends Activity {
         button7.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Perform action on click
-//                Omniata.trackAdvertiserID();
-            Omniata.disablePushNotifications("fcm");
+                Omniata.trackAdvertiserID();
             }
         });
 

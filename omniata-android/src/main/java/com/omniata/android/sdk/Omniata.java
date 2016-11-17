@@ -30,7 +30,7 @@ public class Omniata {
 	
 	private static final String TAG       = "Omniata";
 	private static final String EVENT_LOG = "events";
-	private static final String SDK_VERSION = "android-2.1.13";
+	private static final String SDK_VERSION = "android-2.1.14";
 
 	private static Omniata instance;
     private static OmniataChannelEngine channelHandler;
@@ -484,7 +484,7 @@ public class Omniata {
      * @param registrationId
      */
     public static void enablePushNotifications(String eventType, String registrationId){
-        if ( eventType.equals("fcm") ){
+        if ( (eventType != null) && (eventType.equals("fcm"))){
             eventType = "om_fcm_enable";
         } else {
             eventType = "om_gcm_enable";
@@ -507,29 +507,28 @@ public class Omniata {
 	}
 
 
-    public static void autoEnablePushNotifications(String type, String gcmSenderId){
-        if ( (type !=  null ) && (type.equals("fcm") ) ){
-            String token = FirebaseInstanceId.getInstance().getToken();
-            if ( !token.equals("") || token != null){
-                Omniata.enablePushNotifications("fcm", token);
-            } else {
-                OmniataLog.e(TAG, "Cannot get the push token");
-            }
-        } else {
-            OmniataUtils.gcmSenderId = gcmSenderId;
-            Intent intent = new Intent(instance.context,OmniataRegistrationService.class);
-            instance.context.startService(intent);
-        }
-    }
+	public static void enableFcmPushNotifications(){
+		String token = FirebaseInstanceId.getInstance().getToken();
+		if ( !token.equals("") || token != null){
+			Omniata.enablePushNotifications("fcm", token);
+		} else {
+			OmniataLog.e(TAG, "Cannot get the push token");
+		}
+	}
 
-    /**
-     * Auto get the push registration id and send to Omniata.
-     * @param gcmSenderId, sender ID/ project number of push
-     */
+	public static void enableGcmPushNotifications(String gcmSenderId){
+		autoEnablePushNotifications(gcmSenderId);
+	}
+
+	/**
+	 * Auto get the push registration id and send to Omniata.
+	 * @param gcmSenderId, sender ID/ project number of push
+	 */
     public static void autoEnablePushNotifications(String gcmSenderId){
-        autoEnablePushNotifications(null, gcmSenderId);
+		OmniataUtils.gcmSenderId = gcmSenderId;
+		Intent intent = new Intent(instance.context,OmniataRegistrationService.class);
+		instance.context.startService(intent);
     }
-
 
 	/**
 	 * disalbe push notification of this user in omniata.
