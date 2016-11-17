@@ -18,6 +18,7 @@ import com.omniata.android.sdk.OmniataLog;
 /**
  * UnityGcmListenerService listens the push notification and send it to notification center
  * and also send it back to unity in case it is needed.
+ * supports for both GCM and FCM for displaying push
  */
 public class UnityGcmListenerService extends GcmListenerService {
     private static final String TAG = UnityGcmListenerService.class.getSimpleName();

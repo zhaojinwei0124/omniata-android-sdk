@@ -509,7 +509,7 @@ public class Omniata {
 
 	public static void enableFcmPushNotifications(){
 		String token = FirebaseInstanceId.getInstance().getToken();
-		if ( !token.equals("") || token != null){
+		if ( token != null && !token.equals("")){
 			Omniata.enablePushNotifications("fcm", token);
 		} else {
 			OmniataLog.e(TAG, "Cannot get the push token");
@@ -534,7 +534,7 @@ public class Omniata {
 	 * disalbe push notification of this user in omniata.
 	 */
 	public static void disablePushNotifications(String type) {
-        if ( type.equals("fcm") ) {
+        if ( (type != null) && (type.equals("fcm")) ) {
             track("om_fcm_disable");
         } else {
             track("om_gcm_disable");
